@@ -1,0 +1,102 @@
+#version 450
+
+layout (binding=0) uniform sampler2D permTexture;
+layout (binding=1, r32f) writeonly uniform image2D destTex;
+
+uniform dvec3 lower_left;
+uniform dvec3 top_right;
+
+#define ONE 0.00390625
+#define ONEHALF 0.001953125
+#define SIZE 8
+
+#define frequency 5123.123
+#define randomseed 81
+#define amplitude 1.0
+#define persistence 8.0
+
+double fade(double t) {
+  //return t*t*(3.0-2.0*t); // Old fade
+  return t*t*t*(t*(t*6.0-15.0)+10.0); // Improved fade
+}
+ 
+double noise(dvec3 P)
+{
+  vec3 Pi = ONE*floor(vec3(P))+ONEHALF; 
+                                 
+  dvec3 Pf = P-floor(P);
+  
+  // Noise contributions from (x=0, y=0), z=0 and z=1
+  double perm00 = texture2D(permTexture, Pi.xy).a ;
+  dvec3  grad000 = texture2D(permTexture, vec2(perm00, Pi.z)).rgb * 4.0 - 1.0;
+  double n000 = dot(grad000, Pf);
+  dvec3  grad001 = texture2D(permTexture, vec2(perm00, Pi.z + ONE)).rgb * 4.0 - 1.0;
+  double n001 = dot(grad001, Pf - dvec3(0.0, 0.0, 1.0));
+
+  // Noise contributions from (x=0, y=1), z=0 and z=1
+  double perm01 = texture2D(permTexture, Pi.xy + vec2(0.0, ONE)).a ;
+  dvec3  grad010 = texture2D(permTexture, vec2(perm01, Pi.z)).rgb * 4.0 - 1.0;
+  double n010 = dot(grad010, Pf - dvec3(0.0, 1.0, 0.0));
+  dvec3  grad011 = texture2D(permTexture, vec2(perm01, Pi.z + ONE)).rgb * 4.0 - 1.0;
+  double n011 = dot(grad011, Pf - dvec3(0.0, 1.0, 1.0));
+
+  // Noise contributions from (x=1, y=0), z=0 and z=1
+  double perm10 = texture2D(permTexture, Pi.xy + vec2(ONE, 0.0)).a ;
+  dvec3  grad100 = texture2D(permTexture, vec2(perm10, Pi.z)).rgb * 4.0 - 1.0;
+  double n100 = dot(grad100, Pf - dvec3(1.0, 0.0, 0.0));
+  dvec3  grad101 = texture2D(permTexture, vec2(perm10, Pi.z + ONE)).rgb * 4.0 - 1.0;
+  double n101 = dot(grad101, Pf - dvec3(1.0, 0.0, 1.0));
+
+  // Noise contributions from (x=1, y=1), z=0 and z=1
+  double perm11 = texture2D(permTexture, Pi.xy + vec2(ONE, ONE)).a ;
+  dvec3  grad110 = texture2D(permTexture, vec2(perm11, Pi.z)).rgb * 4.0 - 1.0;
+  double n110 = dot(grad110, Pf - dvec3(1.0, 1.0, 0.0));
+  dvec3  grad111 = texture2D(permTexture, vec2(perm11, Pi.z + ONE)).rgb * 4.0 - 1.0;
+  double n111 = dot(grad111, Pf - dvec3(1.0, 1.0, 1.0));
+
+  // Blend contributions along x
+  dvec4 n_x = mix(dvec4(n000, n001, n010, n011), dvec4(n100, n101, n110, n111), fade(Pf.x));
+
+  // Blend contributions along y
+  dvec2 n_xy = mix(n_x.xy, n_x.zw, fade(Pf.y));
+
+  // Blend contributions along z
+  double n_xyz = mix(n_xy.x, n_xy.y, fade(Pf.z));
+ 
+  return n_xyz;
+}
+
+double turbulence(int octaves, dvec3 P)
+{	
+  double t = 0.0f;
+  double _amplitude = 1;
+  double freq = frequency;
+  for (int k = 0; k < octaves; k++)
+  {
+    t += noise(P * freq + randomseed) * _amplitude;
+    _amplitude *= persistence;
+    freq *= 2;
+  }
+
+return t;
+}
+
+layout( local_size_x = SIZE, local_size_y = SIZE, local_size_z = 1 ) in;
+void main()
+{
+  ivec2 c = ivec2(gl_GlobalInvocationID.xy);
+  double total = (gl_NumWorkGroups.x * SIZE);
+  total -= 1.0;
+  dvec3 alpha = dvec3(c/total,.5);
+  dvec3 beta = 1-alpha;
+  dvec3 v_texCoord3D = beta*lower_left + alpha*top_right;
+  double x = v_texCoord3D.x, y = v_texCoord3D.y, z = v_texCoord3D.z;
+  v_texCoord3D.x = x * sqrt(1.0 - (y*y / 2.0) - (z*z / 2.0) + (y*y*z*z / 3.0));
+  v_texCoord3D.y = y * sqrt(1.0 - (z*z / 2.0) - (x*x / 2.0) + (z*z*x*x / 3.0));
+  v_texCoord3D.z = z * sqrt(1.0 - (x*x / 2.0) - (y*y / 2.0) + (x*x*y*y / 3.0));
+
+  float height = float(turbulence(3, v_texCoord3D));
+
+
+  imageStore(destTex, c, vec4(height));
+}

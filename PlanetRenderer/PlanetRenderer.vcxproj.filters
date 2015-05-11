@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{262e975d-e3fb-40a4-8abb-deae7dd87a3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Shaders">
+      <UniqueIdentifier>{bbafd053-62ba-4400-a635-5dac1c1427e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shaders">
+      <UniqueIdentifier>{99b09acc-ec07-4ef3-beb9-4b8bd437fffb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Camera">
+      <UniqueIdentifier>{c72c893f-137c-4bda-87c3-c650ddbac6bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SceneNode">
+      <UniqueIdentifier>{84630434-245f-4f7e-8956-170658e83a43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System">
+      <UniqueIdentifier>{049e87d7-79bf-447f-9b01-ccfa46ca3ba5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System">
+      <UniqueIdentifier>{c1143dca-9fac-4b1a-8a79-8fb344c34f27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Camera">
+      <UniqueIdentifier>{68838cd6-15bb-4f82-87ad-5dde4f544ea3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SceneNode">
+      <UniqueIdentifier>{97d01d84-a836-4332-a19f-8da3adb11eab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Planet">
+      <UniqueIdentifier>{144cbbd5-ed72-48ae-bca4-6b4daab7a2e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Concurrency">
+      <UniqueIdentifier>{eb2f1938-ec7d-44ab-add9-a8f0d04f080b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Concurrency">
+      <UniqueIdentifier>{ae96131e-8bbd-4274-acf0-887d5c5f60f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Planet">
+      <UniqueIdentifier>{e383ccb0-bd21-4b51-8fac-e91739975e22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Noise">
+      <UniqueIdentifier>{d6c57b14-6910-4407-aff0-1e7b4cbb0d04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Noise">
+      <UniqueIdentifier>{fd5cece3-c96c-4ef6-8858-e99826736124}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Program.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraController.h">
+      <Filter>Header Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneNode.h">
+      <Filter>Header Files\SceneNode</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyBoard.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="PlanetRenderer.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="MathConstants.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Planet.h">
+      <Filter>Header Files\Planet</Filter>
+    </ClInclude>
+    <ClInclude Include="QuadTree.h">
+      <Filter>Header Files\Planet</Filter>
+    </ClInclude>
+    <ClInclude Include="QuadTreeManager.h">
+      <Filter>Header Files\Planet</Filter>
+    </ClInclude>
+    <ClInclude Include="RingBuffer.h">
+      <Filter>Header Files\Concurrency</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureShaders.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="SimplexNoise.h">
+      <Filter>Header Files\Noise</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="perlin.comp">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="screenTex.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="quad.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="bumpmap.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="planet.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="simplex.comp">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Shaders.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyBoard.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraController.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneNode.cpp">
+      <Filter>Source Files\SceneNode</Filter>
+    </ClCompile>
+    <ClCompile Include="RingBuffer.cpp">
+      <Filter>Source Files\Concurrency</Filter>
+    </ClCompile>
+    <ClCompile Include="Planet.cpp">
+      <Filter>Source Files\Planet</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadTreeManager.cpp">
+      <Filter>Source Files\Planet</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadTree.cpp">
+      <Filter>Source Files\Planet</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureShaders.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimplexNoise.cpp">
+      <Filter>Source Files\Noise</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
